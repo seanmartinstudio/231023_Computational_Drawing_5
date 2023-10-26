@@ -1,46 +1,64 @@
-let inc = 0.001;
-let start1 = 1
-let start2 = 0
-let start3 = 0
+let timer;
+let inc = 0.01;
+let start = 1;
+
+
 
 function setup() {
+  pixelDensity(2);
   createCanvas(600, 600);
+   background(0);
+  timer = millis();
 }
 
 function draw() {
-  background(0);
+  let randomAlpha1 = random(10, 30)
+  frameRate(160)
+  beginShape(LINES);
+  let xoff = start;
+  let yoff = start + 1
+  // let randomAlpha1 = random(10, 20)
+  // strokeWeight(10)
+  // stroke(255, randomAlpha1)
+    stroke(0, 0, 255);
+  let y = map(noise(xoff), 0, 1, 0, height)
+  let x = map(noise(yoff), 0, 1, 0, width)
+  vertex(x, y);
+  vertex(width/2, height - 20)
+  xoff += inc;
+  endShape();
+  
+  beginShape(LINES);
+  let xoff2 = start;
+  let yoff2 = start + 1
+  // let randomAlpha2 = random(10, 20);
+  // stroke(255, randomAlpha2)
+  // strokeWeight(10)
+  // stroke(255, randomAlpha1)
+    stroke(0, 0, 255);
+  let y2 = map(noise(xoff2), 0, 1, 0, height)
+  let x2 = map(noise(yoff2), 0, 1, 0, width)
+  vertex(width/2, 20);
+  vertex(x2, y2)
+  xoff += inc;
+  endShape();
+  
+  start += inc;
+  
+      if (millis() - timer >= 2000) {
+    // Restart the sketch by resetting the timer
+    timer = millis();
+    noLoop()
+    // saveCanvas('pixDen4Test', 'jpg');
+  }
 
-//Pink
-  noStroke()
-  fill(255, 105, 180)
-  let xoff1 = start1;
-  for (let x = 0; x < height; x++) {
-    let y = noise(xoff1) * height;
-    circle(x, y, 400);
-    xoff1 += inc;
-  }
-    
-//Purple
-  noStroke()
-  fill(128, 80, 217)
-  let xoff2 = start2;
-  for (let y = 0; y < width; y++) {
-    let x = noise(xoff2) * height;
-    circle(x, y, 350);
-    xoff2 += inc;
-  }
-  
-//Blue 
-  noStroke()
-  fill(25, 55, 254)
-  let xoff3 = start3;
-  for (let y = 0; y < width; y++) {
-    let x = noise(xoff3) * height;
-    circle(x, y, 350);
-    xoff3 += inc;
-  }
-  
-  start1 -= 0.01  
-  start2 += 0.01  
-  start3 += 0.02
+  // function keyPressed() {
+  //   // Check if the 's' key is pressed (you can change this to any key you like)
+  //   if (key === 's' || key === 'S') {
+  //     // Save the canvas as a JPG image
+  //     saveCanvas('mySketch', 'jpg');
+  //   }
+  // }
 }
+
+
